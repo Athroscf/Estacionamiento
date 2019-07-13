@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+// Namespaces para la conexion a la BD
+using System.Data;
+using System.Data.SqlClient;
 
 namespace Estacionamiento
 {
@@ -23,6 +26,33 @@ namespace Estacionamiento
         public MainWindow()
         {
             InitializeComponent();
+
+            
         }
+
+        private void LvControlEntradaSalida_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Main.Content = new EntradasSalidas();
+        }
+
+        private void LvRegistroDiario_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Main.Content = new Registro();
+        }
+
+        // Metodo para registrar la entrada y salida de los vehiculos
+        private void VehiculoEntradaSalida()
+        {
+            try
+            {
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
     }
 }

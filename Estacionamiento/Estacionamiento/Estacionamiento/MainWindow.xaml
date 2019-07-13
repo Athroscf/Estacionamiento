@@ -4,9 +4,44 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Estacionamiento"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF" 
+        mc:Ignorable="d" Height="450" Width="800"
+        fw:AcrylicWindow.Enabled="True" WindowStyle="None" FontSize="15" AllowsTransparency="True" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="350"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid fw:PointerTracker.Enabled="True" Background="#01FFFFFF">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button Foreground="Black" Background="{x:Null}" BorderBrush="{x:Null}">
+                        <materialDesign:PackIcon Kind="Parking"/>
+                    </Button>
+                    <TextBlock Text="Estacionamiento" FontSize="20" Margin="10" VerticalAlignment="Center"/>
+                </StackPanel>
+                <ListView x:Name="lvControlEntradaSalida" Padding="1" SelectionChanged="LvControlEntradaSalida_SelectionChanged">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="CarPark" Margin="15"/>
+                        <TextBlock Text="Control de Entrada y Salida" FontSize="17" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </ListView>
+                <ListView x:Name="lvRegistroDiario" Padding="1" SelectionChanged="LvRegistroDiario_SelectionChanged">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="ViewList" Margin="15"/>
+                        <TextBlock Text="Registro Diario" FontSize="17" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </ListView>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Column="1" Background="White">
+            <Frame x:Name="Main" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}"/>
+        </Grid>
+
+        
         
     </Grid>
 </Window>
