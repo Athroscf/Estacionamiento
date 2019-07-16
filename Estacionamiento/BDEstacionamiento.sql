@@ -88,7 +88,7 @@ VALUES ('Turismo'),
 GO
 
 --Stored Procedure que controla las entradas y salidas de los vehiculos en el estacionamiento
-CREATE PROCEDURE SP_InsercionVehiculosEntradasSalidas
+ALTER PROCEDURE spInsercionVehiculosEntradasSalidas
 (
 	@placa NVARCHAR(8),
 	@tipoVehiculo NVARCHAR(15)
@@ -98,11 +98,14 @@ AS
 		DECLARE @placaVehiculo INT
 		DECLARE @horaEntrada DATETIME
 		DECLARE @horaSalida DATETIME
+		DECLARE @tipo INT
 		
-		IF NOT EXISTS(SELECT * FROM Estacionamiento.Vehiculo WHERE placa = @placa AND tipoVehiculo = @tipoVehiculo)
+		SET @tipo = (SELECT id FROM Estacionamiento.TipoVehiculo WHERE tipo = @tipoVehiculo)
+
+		IF NOT EXISTS(SELECT * FROM Estacionamiento.Vehiculo WHERE placa = @placa)
 		BEGIN
 			INSERT INTO Estacionamiento.Vehiculo (placa, tipoVehiculo, estado)
-			VALUES (@placa, @tipoVehiculo, 1)
+			VALUES (@placa, @tipo, 1)
 
 			SET @placaVehiculo = (SELECT id FROM Estacionamiento.Vehiculo WHERE placa = @placa)
 
@@ -112,25 +115,32 @@ AS
 		ELSE IF EXISTS(SELECT * FROM Estacionamiento.Vehiculo WHERE placa = @placa)
 		BEGIN
 			SET @placaVehiculo = (SELECT id FROM Estacionamiento.Vehiculo WHERE placa = @placa)
-			PRINT(@placaVehiculo)
+
 			IF (SELECT estado FROM Estacionamiento.Vehiculo WHERE placa = @placa) = 0
 			BEGIN
 				INSERT INTO Estacionamiento.PagoVehiculo (vehiculo, fechaHoraEntrada, fechaHoraSalida, total)
 				VALUES (@placaVehiculo, GETDATE(), GETDATE(), 0)
-				UPDATE Estacionamiento.Vehiculo SET estado = 1
+				UPDATE Estacionamiento.Vehiculo SET estado = 1 WHERE placa = @placa
 			END
 			ELSE IF (SELECT estado FROM Estacionamiento.Vehiculo WHERE placa = @placa) = 1
 			BEGIN
-				UPDATE Estacionamiento.PagoVehiculo SET fechaHoraSalida = GETDATE() WHERE vehiculo = @placaVehiculo AND id = (SELECT MAX(id) FROM Estacionamiento.PagoVehiculo)
+				UPDATE Estacionamiento.PagoVehiculo SET fechaHoraSalida = GETDATE() WHERE vehiculo = @placaVehiculo AND id = (SELECT MAX(id) 
+																															  FROM Estacionamiento.PagoVehiculo
+																															  WHERE vehiculo = @placaVehiculo)
 
 				SET @horaEntrada = (SELECT MAX(fechaHoraEntrada) FROM Estacionamiento.PagoVehiculo WHERE vehiculo = @placaVehiculo)
 				SET @horaSalida = (SELECT MAX(fechaHoraSalida) FROM Estacionamiento.PagoVehiculo WHERE vehiculo = @placaVehiculo)
 
-				UPDATE Estacionamiento.Vehiculo SET estado = 0
-				UPDATE Estacionamiento.PagoVehiculo SET total = dbo.Fctn_CalculoPagoVehiculo(@horaEntrada, @horaSalida, @tipoVehiculo) WHERE vehiculo = @placaVehiculo
-																																	   AND id = (SELECT MAX(id) 
-																																	   FROM Estacionamiento.PagoVehiculo)
+				UPDATE Estacionamiento.Vehiculo SET estado = 0 WHERE placa = @placa
+				UPDATE Estacionamiento.PagoVehiculo SET total = dbo.Fctn_CalculoPagoVehiculo(@horaEntrada, @horaSalida, @tipo) WHERE vehiculo = @placaVehiculo
+																															   AND id = (SELECT MAX(id) 
+																															   FROM Estacionamiento.PagoVehiculo
+																															   WHERE vehiculo = @placaVehiculo)
 			END
+		END
+		ELSE
+		BEGIN
+			PRINT('No hizo nada')
 		END
 	END TRY
 	BEGIN CATCH
