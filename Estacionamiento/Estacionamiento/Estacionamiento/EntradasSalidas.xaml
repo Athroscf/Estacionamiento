@@ -18,9 +18,17 @@
         <Label Content="Tipo de Vehiculo" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,100,0,0" ></Label>
 
         <TextBox Name="txtPlaca" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,60,0,0" MinWidth="150" Foreground="Black" SelectionBrush="#FF0E7BD1" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
-        <ComboBox Name="cbTipoVehiculo"  Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,100,0,0" MinWidth="150" Foreground="Black" Height="25" IsSynchronizedWithCurrentItem="True" AllowDrop="True" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+        <ComboBox Name="cbTipoVehiculo"  Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,100,0,0" MinWidth="150" Foreground="Black" Height="25" IsSynchronizedWithCurrentItem="True" AllowDrop="True" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+            <ComboBoxItem>Turismo</ComboBoxItem>
+            <ComboBoxItem>Pick-Up</ComboBoxItem>
+            <ComboBoxItem>Camioneta</ComboBoxItem>
+            <ComboBoxItem>Camion</ComboBoxItem>
+            <ComboBoxItem>Autobus</ComboBoxItem>
+            <ComboBoxItem>Rastra</ComboBoxItem>
+            <ComboBoxItem>Motocicleta</ComboBoxItem>
+        </ComboBox>
 
-        <Button Name="btnIngresarDatos" Content="Ingresar" VerticalAlignment="Center" Padding="10, 0"/>
+        <Button Name="btnIngresarDatos" Content="Ingresar" Click="BtnIngresarDatos_Click" VerticalAlignment="Center" Padding="10, 0"/>
 
         <TextBox Name="txtHoraIngresoSalida" Grid.Column="1" HorizontalAlignment="Center" Margin="0,60" MinWidth="150" Foreground="Black" SelectionBrush="#FF0E7BD1" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" VerticalAlignment="Bottom" IsReadOnly="True"/>
     </Grid>

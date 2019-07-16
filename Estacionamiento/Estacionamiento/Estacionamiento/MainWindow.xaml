@@ -7,7 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF" 
         mc:Ignorable="d" Height="450" Width="800"
-        fw:AcrylicWindow.Enabled="True" WindowStyle="None" FontSize="15" AllowsTransparency="True" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        fw:AcrylicWindow.Enabled="False" WindowStyle="None" FontSize="15" AllowsTransparency="True" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="350"/>
@@ -34,11 +34,17 @@
                         <TextBlock Text="Registro Diario" FontSize="17" VerticalAlignment="Center"/>
                     </StackPanel>
                 </ListView>
+                <ListView x:Name="lvSalirPrograma" Padding="1" SelectionChanged="LvSalirPrograma_SelectionChanged">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="ExitToApp" Margin="15"/>
+                        <TextBlock Text="Salir del Programa" FontSize="17" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </ListView>
             </StackPanel>
         </Grid>
 
         <Grid Grid.Column="1" Background="White">
-            <Frame x:Name="Main" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}"/>
+            <Frame x:Name="Main" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" NavigationUIVisibility="Hidden"/>
         </Grid>
 
         

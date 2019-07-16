@@ -12,9 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-// Namespaces para la conexion a la BD
-using System.Data;
-using System.Data.SqlClient;
 
 namespace Estacionamiento
 {
@@ -26,33 +23,44 @@ namespace Estacionamiento
         public MainWindow()
         {
             InitializeComponent();
-
-            
         }
 
         private void LvControlEntradaSalida_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Main.Content = new EntradasSalidas();
+            Main.NavigationService.Navigate(new EntradasSalidas());
         }
 
         private void LvRegistroDiario_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Main.Content = new Registro();
+            Main.NavigationService.Navigate(new Registro());
         }
 
-        // Metodo para registrar la entrada y salida de los vehiculos
-        private void VehiculoEntradaSalida()
+        private void LvSalirPrograma_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            try
+            if (MessageBox.Show("Close Application?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-
-            }
-            catch (Exception)
-            {
-
-                throw;
+                Application.Current.Shutdown();
             }
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LvControlEntradaSalida_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LvRegistroDiario_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LvSalirPrograma_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

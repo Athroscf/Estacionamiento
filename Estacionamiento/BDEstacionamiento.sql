@@ -87,8 +87,20 @@ VALUES ('Turismo'),
 	   ('Motocicleta')
 GO
 
+SELECT Vehiculo.placa,
+	   TipoVehiculo.tipo,
+	   PagoVehiculo.fechaHoraEntrada,
+	   PagoVehiculo.fechaHoraSalida,
+	   PagoVehiculo.total
+FROM Estacionamiento.Vehiculo
+INNER JOIN Estacionamiento.PagoVehiculo
+ON Estacionamiento.PagoVehiculo.vehiculo = Estacionamiento.Vehiculo.id
+INNER JOIN Estacionamiento.TipoVehiculo
+ON Estacionamiento.TipoVehiculo.id = Estacionamiento.Vehiculo.tipoVehiculo
+GO
+
 --Stored Procedure que controla las entradas y salidas de los vehiculos en el estacionamiento
-ALTER PROCEDURE spInsercionVehiculosEntradasSalidas
+CREATE PROCEDURE spInsercionVehiculosEntradasSalidas
 (
 	@placa NVARCHAR(8),
 	@tipoVehiculo NVARCHAR(15)
